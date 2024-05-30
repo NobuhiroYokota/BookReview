@@ -1,7 +1,20 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+// vitest.config.ts
+import { defineConfig } from 'vitest/config';
+import tailwindcss from 'tailwindcss';
+import postcss from 'postcss';
+import react from '@vitejs/plugin-react';
 
-// https://vitejs.dev/config/
 export default defineConfig({
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: './src/setupTests.ts',
+  },
   plugins: [react()],
-})
+  css: {
+    postcss: {
+      plugins: [tailwindcss()],
+    },
+  },
+});
+
