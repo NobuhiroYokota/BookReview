@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import Compressor from "compressorjs";
 import { useCookies } from "react-cookie";
 import axios from "axios";
-import { signIn } from './authSlice';
+import { signIn } from './features/authSlice';
 import { useDispatch } from 'react-redux';
 
 function Signup() {

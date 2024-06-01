@@ -7,7 +7,6 @@ const initialState = {
   isSignIn: cookie.get('token') !== undefined,
 };
 
-
 interface state {
   isSignIn:boolean
 }
