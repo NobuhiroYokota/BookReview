@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './App.css';
+import { useDispatch} from 'react-redux';
+import { signIn } from './features/authSlice'
+import { useCookies } from 'react-cookie';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [cookies,setCookie] =useCookies();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const url = 'https://railway.bookreview.techtrain.dev/signin';
 
@@ -30,6 +35,8 @@ function Login() {
           setErrorMessage('');
           // ログインが成功
           navigate('/Home');
+          dispatch(signIn());
+          setCookie('token', data.token)
         } else {
           // 認証エラー
           setErrorMessage('ログインに失敗しました。');

@@ -5,6 +5,7 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import { signIn } from './features/authSlice';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from "react-router-dom";
 
 function Signup() {
   const userUrl = 'https://railway.bookreview.techtrain.dev/users';
@@ -21,6 +22,7 @@ function Signup() {
   const [cookies, setCookie] = useCookies(['token']);
   const [picture, setPicture] = useState<File>();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onSubmit = async (data: LoginForm) => {
     try {
@@ -29,6 +31,7 @@ function Signup() {
       console.log(token);
       dispatch(signIn());
       setCookie('token', token);
+      navigate('/')
 
       if (!picture) return;
 
@@ -54,7 +57,7 @@ function Signup() {
         },
       });
     } catch (err) {
-      setErrorMessage(`サインアップに失敗しました。 ${err.message}`);
+      setErrorMessage(err.message);
     }
   };
 
