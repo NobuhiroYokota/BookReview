@@ -1,5 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { Cookies } from 'react-cookie';
 
 interface BookReview {
   id: string;
@@ -8,6 +9,7 @@ interface BookReview {
   detail: string;
   review: string;
   reviewer: string;
+  isMine:boolean;
 }
 
 interface BookState{
@@ -24,8 +26,16 @@ const initialState:BookState = {
   status:'idle'
 };
 
+
 export const fetchBooks = createAsyncThunk('books/fetchBooks', async(offset:number)=>{
-  const response = await axios.get(`https://railway.bookreview.techtrain.dev/public/books?offset=${offset}`);
+  const cookies = new Cookies();
+  const token = cookies.get('token');
+  const response = await axios.get(`https://railway.bookreview.techtrain.dev/books?offset=${offset}`,{
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    }
+  });
   return response.data;
 });
 

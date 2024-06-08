@@ -30,7 +30,7 @@ export function Header() {
       <div className="text-4xl">書籍レビュー</div>
       {auth ? (
         <div className="flex items-center">
-          <Link to={'/Home/new'}>レビューを追加</Link>
+          <Link to={'/Home/new'} className="mr-4">レビューを追加</Link>
           {user.iconUrl && <img src={user.iconUrl} alt="User Icon" className="w-10 h-10 rounded-full mr-4" />}
           <Link to="Profile" className="mr-4">{user.name}</Link>
           <button onClick={handleLogout} className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
