@@ -9,4 +9,11 @@ test('Email,Passwordを入力していない', async ({ page }) => {
   expect(errorMessage).toBe('Email、Passwordを入力してください。');
 });
 
-
+test('EmailとPasswordが入力されている場合、Errorメッセージが表示されない', async ({ page }) => {
+  await page.goto('http://localhost:5173');
+  await page.fill('input[id="email"]', 'test@example.com');
+  await page.fill('input[id="password"]', 'password123');
+  await page.click('button[type="submit"]');
+  const errorMessageLocator = page.locator('#error');
+  await expect(errorMessageLocator).toBeHidden();
+});

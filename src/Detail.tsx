@@ -57,6 +57,9 @@ function Detail() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+      <Link to="/home" className="absolute top-4 left-4 px-4 py-2 bg-gray-600 text-white font-semibold rounded hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500">
+        戻る
+      </Link>
       {data ? (
         <div className="m-10 p-8 border rounded-lg shadow-lg bg-white max-w-2xl w-full">
           <h1 className="text-2xl font-bold mb-4">{data.title}</h1>

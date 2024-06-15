@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
-import { useParams, useNavigate } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 function EditReview() {
   interface DataForm {
@@ -21,12 +21,12 @@ function EditReview() {
   const [newReview, setNewReview] = useState("");
   const [beforeData, setBeforeData] = useState<DataForm | null>(null);
   const [cookies] = useCookies(['token']);
-  const navigate = useNavigate();
-  const Url = `https://railway.bookreview.techtrain.dev/books/${id}`;
+  const getUrl = `https://railway.bookreview.techtrain.dev/books/${id}`;
+  const postUrl = `https://railway.bookreview.techtrain.dev/log`;
 
   useEffect(() => {
     axios
-      .get(Url, {
+      .get(getUrl, {
         headers: {
           Authorization: `Bearer ${cookies.token}`,
           'Content-Type': 'application/json',
@@ -45,6 +45,22 @@ function EditReview() {
       });
   }, [id, cookies.token]);
 
+  useEffect(() => {
+    axios
+      .post(postUrl, { selectBookId: id }, {
+        headers: {
+          Authorization: `Bearer ${cookies.token}`,
+          'Content-Type': 'application/json',
+        },
+      })
+      .then((response) => {
+        console.log('Log posted:', response.data);
+      })
+      .catch((err) => {
+        console.log('Post failed:', err.message);
+      });
+  }, [id, cookies.token]);
+
   const handleEdit = () => {
     const data = {
       title: newTitle,
@@ -54,7 +70,7 @@ function EditReview() {
     };
 
     axios
-      .put(Url, data, {
+      .put(getUrl, data, {
         headers: {
           Authorization: `Bearer ${cookies.token}`,
           'Content-Type': 'application/json',
@@ -62,7 +78,6 @@ function EditReview() {
       })
       .then((res) => {
         console.log(res);
-        navigate('/Home')
       })
       .catch((err) => {
         console.log(err);
@@ -71,15 +86,15 @@ function EditReview() {
 
   const handleDelete = () => {
     axios
-      .delete(Url, {
+      .delete(getUrl, {
         headers: {
           Authorization: `Bearer ${cookies.token}`,
           'Content-Type': 'application/json',
         },
       })
       .then((res) => {
-        console.log("succeed",res);
-        navigate('/Home')
+        console.log(res);
+        // Redirect to home page or another appropriate page after deletion
       })
       .catch((err) => {
         console.log(err);
@@ -87,7 +102,10 @@ function EditReview() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4 relative">
+      <Link to="/home" className="absolute top-4 left-4 px-4 py-2 bg-gray-600 text-white font-semibold rounded hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500">
+        戻る
+      </Link>
       {beforeData ? (
         <div className="w-full max-w-md p-8 border rounded-lg shadow-lg bg-white">
           <h1 className="text-2xl font-bold mb-4">レビューの編集</h1>
