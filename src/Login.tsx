@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './App.css';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch} from 'react-redux';
 import { signIn } from './features/authSlice'
 import { useCookies } from 'react-cookie';
@@ -30,15 +29,12 @@ function Login() {
       .then(response => response.json())
       .then(data => {
         if (data.token) {
-          // トークンを取得した場合
           console.log('Login successful:', data.token);
           setErrorMessage('');
-          // ログインが成功
           navigate('/Home');
           dispatch(signIn());
           setCookie('token', data.token)
         } else {
-          // 認証エラー
           setErrorMessage('ログインに失敗しました。');
         }
       })
@@ -83,6 +79,10 @@ function Login() {
             >
               Login
             </button>
+            <Link
+                to="./Signup"
+                className="w-full flex justify-center mt-4 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">SignUp
+            </Link>
           </div>
         </form>
       </div>

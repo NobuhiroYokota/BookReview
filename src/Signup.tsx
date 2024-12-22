@@ -5,7 +5,7 @@ import { useCookies } from "react-cookie";
 import axios from "axios";
 import { signIn } from './features/authSlice';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Signup() {
   const userUrl = 'https://railway.bookreview.techtrain.dev/users';
@@ -70,6 +70,9 @@ function Signup() {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <Link to="/" className="absolute top-4 left-4 px-4 py-2 bg-gray-600 text-white font-semibold rounded hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500">
+        戻る
+      </Link>
       <div className="bg-white p-8 rounded-xl shadow-md w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6">Signup</h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">

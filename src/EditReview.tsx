@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 function EditReview() {
   interface DataForm {
@@ -21,6 +21,7 @@ function EditReview() {
   const [newReview, setNewReview] = useState("");
   const [beforeData, setBeforeData] = useState<DataForm | null>(null);
   const [cookies] = useCookies(['token']);
+  const navigate = useNavigate()
   const getUrl = `https://railway.bookreview.techtrain.dev/books/${id}`;
   const postUrl = `https://railway.bookreview.techtrain.dev/log`;
 
@@ -94,7 +95,7 @@ function EditReview() {
       })
       .then((res) => {
         console.log(res);
-        // Redirect to home page or another appropriate page after deletion
+        navigate('/Home');
       })
       .catch((err) => {
         console.log(err);
